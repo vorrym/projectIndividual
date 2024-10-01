@@ -1,1 +1,2 @@
 # projectIndividual
+# lol joski sait
