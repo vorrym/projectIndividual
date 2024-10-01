@@ -34,13 +34,13 @@
 });
 
     // Инициализация источника трекинга (например, QR-код или изображение)
-    const tracker = new ZapparThree.ImageTrackerLoader().load('https://github.com/vorrym/IndividualProject/blob/main/photo.png.zpt');
+    const tracker = new ZapparThree.ImageTrackerLoader().load('https://github.com/vorrym/projectIndividual/blob/main/photo.png.zpt');
     const trackerGroup = new ZapparThree.ImageAnchorGroup(camera, tracker);
     scene.add(trackerGroup);
 
     // Загрузка 3D-модели
     const loader = new THREE.GLTFLoader();
-    loader.load('https://github.com/vorrym/IndividualProject/blob/main/testModel.glb', function (gltf) {
+    loader.load('https://github.com/vorrym/projectIndividual/blob/main/testModel.glb', function (gltf) {
       const model = gltf.scene;
       model.scale.set(0.5, 0.5, 0.5); // Масштаб модели
       model.position.set(0, 0, 0); // Позиция модели
