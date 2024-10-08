@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Zappar WebAR with 3D Model</title>
   <!-- Подключаем Zappar и Three.js -->
-  <script src="https://github.com/vorrym/projectIndividual/blob/main/zappar-threejs.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/zappar-threejs@1.1.2/dist/zappar-threejs.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three/examples/js/loaders/GLTFLoader.js"></script>
 </head>
 <body>
   <!-- Контейнер для AR -->
@@ -23,28 +22,31 @@
     const scene = new THREE.Scene();
     const camera = new ZapparThree.Camera();
     scene.add(camera);
-    ZapparThree.permissionRequestUI().then(granted => {
-  if (granted) {
-    ZapparThree.permissionRequestUI().then(() => {
-      camera.start();
-    });
-  } else {
-    ZapparThree.permissionDeniedUI();
-  }
-});
 
-    // Инициализация источника трекинга (например, QR-код или изображение)
-    const tracker = new ZapparThree.ImageTrackerLoader().load('https://github.com/vorrym/projectIndividual/blob/main/photo.png.zpt');
-    const trackerGroup = new ZapparThree.ImageAnchorGroup(camera, tracker);
-    scene.add(trackerGroup);
-
-    // Загрузка 3D-модели
-    const loader = new THREE.GLTFLoader();
+    // Загрузка модели
+    const loader = new ZapparThree.GLTFLoader();
     loader.load('https://github.com/vorrym/projectIndividual/blob/main/testModel.glb', function (gltf) {
       const model = gltf.scene;
       model.scale.set(0.5, 0.5, 0.5); // Масштаб модели
       model.position.set(0, 0, 0); // Позиция модели
-      trackerGroup.add(model); // Привязка модели к трекеру
+
+      // Добавьте модель после запуска AR-трекинга
+      ZapparThree.start().then(() => {
+        // ...
+        // Загрузите трекер
+        const tracker = new ZapparThree.ImageTrackerLoader().load(
+          'https://github.com/vorrym/projectIndividual/blob/main/photo.png.zpt'
+        );
+
+        // ...
+        // Создайте группу для размещения модели
+        const trackerGroup = new ZapparThree.ImageAnchorGroup(camera, tracker);
+        scene.add(trackerGroup);
+
+        // ...
+        // Добавьте модель к группе
+        trackerGroup.add(model); // Привязка модели к трекеру
+      });
     }, undefined, function (error) {
       console.error('Ошибка загрузки модели:', error);
     });
