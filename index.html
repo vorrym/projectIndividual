@@ -21,6 +21,7 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     // Инициализация сцены и камеры
+    ZapparThree.start();
     const scene = new THREE.Scene();
     const camera = new ZapparThree.Camera();
     scene.add(camera);
@@ -35,7 +36,6 @@
 });
 
     // Инициализация источника трекинга (например, QR-код или изображение)
-    ZapparThree.start();
     const tracker = new ZapparThree.ImageTrackerLoader().load('https://github.com/vorrym/projectIndividual/blob/main/photo.png.zpt');
     const trackerGroup = new ZapparThree.ImageAnchorGroup(camera, tracker);
     scene.add(trackerGroup);
