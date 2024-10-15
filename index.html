@@ -1,21 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>AR.js Demo</title>
+    <title>AR.js Interactive Demo</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@master/aframe/build/aframe-ar.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
-    <!-- Сцена AR.js -->
+    <!-- AR-сцена -->
     <a-scene embedded arjs>
-        <!-- Камера для отслеживания маркеров -->
+        <!-- Маркер -->
         <a-marker preset="hiro">
-            <!-- Пример 3D-модели (коробка) -->
-            <a-entity gltf-model="url(https://github.com/vorrym/projectIndividual/blob/main/testModel.glb)" scale="0.2 0.2 0.2"></a-entity>
+            <!-- Куб с интерактивностью -->
+            <a-entity gltf-model="url(testModel.glb)" position="0 0 0" scale="0.2 0.2 0.2"></a-entity>
         </a-marker>
 
-        <!-- Добавляем фон, который появится, если камера не обнаружит маркера -->
+        <!-- Камера -->
         <a-entity camera></a-entity>
     </a-scene>
+
+    <script>
+        // Добавление вращения куба при нажатии
+        const box = document.getElementById("interactiveBox");
+
+        box.addEventListener("click", () => {
+            box.setAttribute("animation", {
+                property: "rotation",
+                to: "0 360 0",
+                loop: true,
+                dur: 2000,
+            });
+        });
+    </script>
 </body>
 </html>
