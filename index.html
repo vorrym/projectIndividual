@@ -12,9 +12,6 @@
     <!-- AR-сцена -->
     <a-scene embedded arjs>
         <!-- Добавляем курсор для обработки нажатий на мобильных устройствах -->
-        <a-entity camera look-controls>
-            <a-cursor></a-cursor>
-        </a-entity>
 
         <!-- Маркер Hiro для распознавания -->
         <a-marker preset="hiro">
@@ -37,9 +34,9 @@
         object.addEventListener("click", () => {
             object.setAttribute("animation", {
                 property: "rotation",
-                to: "0 360 0",
+                to: "0 0 360",
                 loop: true,
-                dur: 2000,
+                dur: 4000,
             });
         });
     </script>
