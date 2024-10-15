@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>AR.js Interactive Demo</title>
+    <title>Interactive AR.js Demo</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
     <!-- AR-сцена -->
     <a-scene embedded arjs>
+        <!-- Добавляем курсор для обработки нажатий -->
+        <a-entity camera look-controls>
+            <a-cursor></a-cursor>
+        </a-entity>
+
         <!-- Маркер -->
         <a-marker preset="hiro">
             <!-- Куб с интерактивностью -->
-            <a-entity gltf-model="url(testModel.glb)" position="0 0 0" scale="0.2 0.2 0.2"></a-entity>
+            <a-entity gltf-model="url(testModel.glb)" position="0 0.5 0" material="color: red;" scale="0.2 0.2 0.2" id="interactiveBox" 
+                   event-set__1="_event: mousedown; material.color: blue"
+                   event-set__2="_event: mouseup; material.color: red"></a-entity>
         </a-marker>
 
         <!-- Камера -->
