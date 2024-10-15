@@ -1,67 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zappar WebAR with 3D Model</title>
-  <!-- Подключаем Zappar и Three.js -->
-  <script src="https://libs.zappar.com/zappar-js/*/zappar.js"></script>
-  <script src="https://libs.zappar.com/zappar-threejs/2.5.0/zappar-threejs.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three/examples/js/loaders/GLTFLoader.js"></script>
+    <title>AR.js Demo</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@master/aframe/build/aframe-ar.js"></script>
 </head>
-<body>
-  <!-- Контейнер для AR -->
-  <canvas id="ar-view"></canvas>
+<body style="margin: 0; overflow: hidden;">
+    <!-- Сцена AR.js -->
+    <a-scene embedded arjs>
+        <!-- Камера для отслеживания маркеров -->
+        <a-marker preset="hiro">
+            <!-- Пример 3D-модели (коробка) -->
+            <a-box position="0 0.5 0" material="color: red;"></a-box>
+        </a-marker>
 
-  <script>
-    // Инициализация WebGL контекста
-    const canvas = document.getElementById('ar-view');
-    const renderer = new THREE.WebGLRenderer({ canvas });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-
-    // Инициализация сцены и камеры
-    ZapparThree.start();
-    const scene = new THREE.Scene();
-    const camera = new ZapparThree.Camera();
-    scene.add(camera);
-    ZapparThree.permissionRequestUI().then(granted => {
-  if (granted) {
-    ZapparThree.permissionRequestUI().then(() => {
-      camera.start();
-    });
-  } else {
-    ZapparThree.permissionDeniedUI();
-  }
-});
-
-    // Инициализация источника трекинга (например, QR-код или изображение)
-    const tracker = new ZapparThree.ImageTrackerLoader().load('https://github.com/vorrym/projectIndividual/blob/main/photo.png.zpt');
-    const trackerGroup = new ZapparThree.ImageAnchorGroup(camera, tracker);
-    scene.add(trackerGroup);
-
-    // Загрузка 3D-модели
-    const loader = new THREE.GLTFLoader();
-    loader.load('https://github.com/vorrym/projectIndividual/blob/main/testModel.glb', function (gltf) {
-      const model = gltf.scene;
-      model.scale.set(0.5, 0.5, 0.5); // Масштаб модели
-      model.position.set(0, 0, 0); // Позиция модели
-      trackerGroup.add(model); // Привязка модели к трекеру
-    }, undefined, function (error) {
-      console.error('Ошибка загрузки модели:', error);
-    });
-
-    // Рендер сцены
-    function animate() {
-      requestAnimationFrame(animate);
-      renderer.render(scene, camera);
-    }
-    animate();
-
-    // Обработка изменения размера экрана
-    window.addEventListener('resize', () => {
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-  </script>
+        <!-- Добавляем фон, который появится, если камера не обнаружит маркера -->
+        <a-entity camera></a-entity>
+    </a-scene>
 </body>
 </html>
