@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    
     <title>WebAR Demo on Mobile</title>
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
@@ -22,12 +24,44 @@
                       position="0 0 0" 
                       rotation="0 0 0" 
                       id="interactiveObject"></a-entity>
-            <!-- Текст с информацией -->
-            <a-text value="1 место\nпо результатам ЕГЭ в Нижнекамске по математике и информатике в 2022-2024 гг.\n1 место\nпо результатам ЕГЭ в Нижнекамске по математике и информатике в 2022-2024 гг."
-                    color="white" 
+
+<!-- Текст с информацией -->
+            <!-- Заголовок -->
+            <a-text value="Наши особенности" 
+                    position="0 1.5 0" 
+                    rotation="-90 0 0" 
+                    align="center" 
+                    width="3" 
+                    color="black" 
+                    font="roboto"></a-text>
+
+            <!-- Первый блок текста -->
+            <a-text value="✅ Конкурсный отбор: \nТолько мотивированные ученики." 
                     position="0 1 0" 
-                    scale="1.5 1.5 1.5" 
-                    align="center"></a-text>
+                    rotation="-90 0 0" 
+                    align="center" 
+                    width="2.5" 
+                    color="blue"></a-text>
+            <a-text value="🏆 Олимпиадное движение: \nДостижения на международных олимпиадах." 
+                    position="0 0.5 0" 
+                    rotation="-90 0 0" 
+                    align="center" 
+                    width="2.5" 
+                    color="blue"></a-text>
+            <a-text value="👨‍🏫 Индивидуальный подход: \n6 учеников на педагога." 
+                    position="0 0 0" 
+                    rotation="-90 0 0" 
+                    align="center" 
+                    width="2.5" 
+                    color="blue"></a-text>
+
+            <!-- Второй блок текста -->
+            <a-text value="🏆 1 место по ЕГЭ \n💯 100 баллов по информатике \n📊 ТОП-5 школ Татарстана" 
+                    position="0 -0.5 0" 
+                    rotation="-90 0 0" 
+                    align="center" 
+                    width="2.5" 
+                    color="green"></a-text>        
         </a-marker>
 
         <!-- Камера -->
