@@ -23,13 +23,17 @@
                       scale="1 1 1" 
                       position="0 0 0" 
                       rotation="0 0 0" 
-                      id="interactiveObject"></a-entity>
+                      id="interactiveObject">
+                    <a-animation attribute="position" to="0 2.2 -5" direction="alternate" dur="2000"
+                    repeat="indefinite"></a-animation>
+ </a-box>
+</a-scene>
+                      </a-entity>
 
 <!-- Текст с информацией -->
             <!-- Заголовок -->
-            <a-text value="Наши особенности" 
+            <a-text value="AHHAHAHAHAHHAHHAHHA" 
                     position="0 -1 1.5" 
-                    font="url(assets/NimbusSanL-Reg.otf)"
                     rotation="-90 0 0" 
                     scale="1 1 1"
                     align="center" 
@@ -80,23 +84,10 @@
                     width="2.5" 
                     color="black"></a-text>        
         </a-marker>
-
+        
         <!-- Камера -->
         <a-entity camera></a-entity>
     </a-scene>
 
-    <script>
-        // Считывание нажатий на телефоне
-        const object = document.getElementById("interactiveObject");
-
-        object.addEventListener("click", () => {
-            object.setAttribute("animation", {
-                property: "rotation",
-                to: "0 0 360",
-                loop: true,
-                dur: 4000,
-            });
-        });
-    </script>
 </body>
 </html>
