@@ -19,12 +19,42 @@
         <!-- Маркер  -->
         <a-marker preset="hiro">
             <!-- 3D-модель (замени ссылку на свою модель) -->
-            <a-entity gltf-model="url(assets/lieceyLogo.glb)"
-                      scale="1 1 1" 
-                      position="0 0 0" 
-                      rotation="0 0 0" 
-                      id="interactiveObject">
-                      </a-entity>
+            <a-entity id="model-container" position="0 0 0"></a-entity>
+            <script>
+              document.addEventListener("DOMContentLoaded", function () {
+                // Список моделей
+                const models = [
+                  { src: "assets/logo1.glb", scale: "1 1 1", rotation: "0 0 180" },
+                  { src: "assets/logo2.glb", scale: "1 1 1", rotation: "0 0 180" },
+                  { src: "assets/logo3.glb", scale: "1 1 1", rotation: "0 0 180" }
+                  { src: "assets/logo4.glb", scale: "1 1 1", rotation: "0 0 180" }
+                  { src: "assets/logo5.glb", scale: "1 1 1", rotation: "0 0 180" }
+
+                ];
+            
+                let currentIndex = 0;
+            
+                const modelContainer = document.querySelector("#model-container");
+            
+                // Функция для смены модели
+                function updateModel(index) {
+                  const model = models[index];
+                  modelContainer.setAttribute("gltf-model", model.src);
+                  modelContainer.setAttribute("scale", model.scale);
+                  modelContainer.setAttribute("rotation", model.rotation);
+                }
+            
+                // Устанавливаем начальную модель
+                updateModel(currentIndex);
+            
+                // Перелистывание моделей по нажатию
+                document.addEventListener("click", () => {
+                  currentIndex = (currentIndex + 1) % models.length;
+                  updateModel(currentIndex);
+                });
+              });
+            </script>
+
 
 <!-- Текст с информацией -->
             <!-- Заголовок -->
