@@ -56,11 +56,31 @@
             </script>
 
 
+            <a-plane id="button" 
+                     color="#ff5722" 
+                     position="0 -0.5 0" 
+                     scale="1 0.4 1"
+                     event-set__mouseenter="scale: 1.2 0.5 1"
+                     event-set__mouseleave="scale: 1 0.4 1"
+                     class="clickable">
+                <a-text value="Нажми меня!" 
+                        align="center" 
+                        color="#ffffff" 
+                        position="0 0 0.1"></a-text>
+            </a-plane>
+
         </a-marker>
         
         <!-- Камера -->
         <a-entity camera></a-entity>
     </a-scene>
+    <script>
+        // Обработка нажатия на кнопку
+        const button = document.querySelector("#button");
+        button.addEventListener("click", () => {
+            alert("Кнопка нажата!");
+        });
+    </script>
 
 </body>
 </html>
