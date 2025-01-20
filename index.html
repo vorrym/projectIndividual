@@ -9,10 +9,28 @@
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
     <style>
         body { margin: 0; overflow: hidden; }
+        .button {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            background-color: #4CAF50; /* Зеленый цвет */
+            color: white;
+            text-align: center;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #45a049; /* Темнее при наведении */
+        }
     </style>
 </head>
 <body>
-    <!-- AR-сцена -->
+    
+    
     <a-scene embedded arjs>
         <!-- Добавляем курсор для обработки нажатий на мобильных устройствах -->
 
@@ -57,30 +75,20 @@
 
 
             <a-plane id="button" 
-                     color="#ff5722" 
-                     position="2 -0.5 0" 
-                     scale="3 3 3"
-                     rotation="-90 0 0"
-                     event-set__mouseenter="scale: 1.2 0.5 1"
-                     event-set__mouseleave="scale: 1 0.4 1"
-                     class="clickable">
-                <a-text value="Нажми меня!" 
-                        align="center" 
-                        color="#ffffff" 
-                        position="0 0 0.1"></a-text>
-            </a-plane>
 
         </a-marker>
         
         <!-- Камера -->
         <a-entity camera></a-entity>
     </a-scene>
-    <script>
-        // Обработка нажатия на кнопку
-        const button = document.querySelector("#button");
-        button.addEventListener("click", () => {
-            alert("Кнопка нажата!");
-        });
+
+    <button class="button" onclick="openWebsite()">Перейти на сайт лицея</button>
+
+                
+<script>
+        function openWebsite() {
+            window.open('http://litsey24.ru', '_blank'); // Открывает сайт в новой вкладке
+        }
     </script>
 
 </body>
