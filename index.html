@@ -9,6 +9,24 @@
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
     <style>
         body { margin: 0; overflow: hidden; }
+        button {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            background-color: #4CAF50; /* Зеленый цвет */
+            color: white;
+            text-align: center;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #45a049; /* Темнее при наведении */
+        }
+
     </style>
 </head>
 <body>
@@ -57,13 +75,20 @@
             </script>
 
 
-            <a-plane id="button" 
 
         </a-marker>
         
         <!-- Камера -->
         <a-entity camera></a-entity>
     </a-scene>
+    <button class="button" onclick="openWebsite()">Перейти на сайт лицея</button>
+
+                
+<script>
+        function openWebsite() {
+            window.open('http://litsey24.ru'); 
+        }
+    </script>
 
 
 </body>
