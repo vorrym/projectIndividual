@@ -9,9 +9,10 @@
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
     <style>
         body { margin: 0; overflow: hidden; }
-        button.arjs-show-controls {
-            display: none !important;
+        div.a-enter-vr {
+          visibility: hidden;
         }
+
         button {
             position: fixed;
             bottom: 0;
@@ -47,10 +48,10 @@
                 // Список моделей
                 const models = [
                   { src: "assets/logo1v2.glb", scale: "1 1 1", rotation: "90 0 180" },
-                  { src: "assets/logo2.glb", scale: "1 1 1", rotation: "90 0 180" },
-                  { src: "assets/logo3.glb", scale: "1 1 1", rotation: "90 0 180" },
-                  { src: "assets/logo4.glb", scale: "1 1 1", rotation: "90 0 180" },
-                  { src: "assets/logo5.glb", scale: "1 1 1", rotation: "90 0 180" }
+                  { src: "assets/logo2v2.glb", scale: "1 1 1", rotation: "90 0 180" },
+                  { src: "assets/logo3v2.glb", scale: "1 1 1", rotation: "90 0 180" },
+                  { src: "assets/logo4v2.glb", scale: "1 1 1", rotation: "90 0 180" },
+                  { src: "assets/logo5v2.glb", scale: "1 1 1", rotation: "90 0 180" }
 
                 ];
             
