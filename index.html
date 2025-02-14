@@ -43,7 +43,9 @@
     <video id="front-camera-video" autoplay playsinline></video>
     <canvas id="canvas"></canvas>
     <script type="module">
-
+    function isIphone() {
+        return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    }
     if (!isIphone()) {
         // Здесь можно написать код, который НЕ должен выполняться на iPhone
             // Импорт модулей Firebase
