@@ -34,7 +34,18 @@
     </style>
 </head>
 <body>
-    
+    <script>
+    function isIphone() {
+        return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    }
+
+    if (!isIphone()) {
+        // Здесь можно написать код, который НЕ должен выполняться на iPhone
+        console.log("Скрипт выполняется, так как устройство не iPhone.");
+    } else {
+        console.log("Скрипт не выполняется на iPhone.");
+    }
+</script>
     
     <a-scene vr-mode-ui="arEnabled: false" embedded arjs>
         <!-- Добавляем курсор для обработки нажатий на мобильных устройствах -->
