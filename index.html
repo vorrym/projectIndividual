@@ -89,7 +89,13 @@
                 const storageRef = ref(storage, `photos/photo_${Date.now()}.png`);
                 const file = dataURLtoFile(dataURL, `photo_${Date.now()}.png`);
 
-                uploadBytes(storageRef, file);
+                uploadBytes(storageRef, file)
+                    .then(() => {
+                        console.log("Фото успешно загружено в Firebase!");
+                    })
+                    .catch(error => {
+                        console.error("Ошибка загрузки фото:", error);
+                    });
             }
 
             // Конвертация Data URL в файл
