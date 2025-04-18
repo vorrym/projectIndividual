@@ -7,9 +7,20 @@
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
     <style>
-        #videoElement, #front-camera-video, #canvas {
-            display: none;
-        }
+
+        #videoElement {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+#front-camera-video, #canvas {
+  display: none;
+}
+
         
         body { margin: 0; overflow: hidden; }
         div.a-enter-vr {
